@@ -13,8 +13,8 @@ CFLAGS = $(STD) $(OPTIMIZATION) $(WARN) $(DEBUG)
 
 RM = rm -f
 
-# SRC = $(wildcard src/*.c)
-SRC = src/main.c
+SRC = $(wildcard src/*.c)
+# SRC = src/swing.c src/swg_log.c
 OBJ = $(SRC:.c=.o)
 
 all: swing
@@ -23,8 +23,12 @@ all: swing
 swing: $(OBJ)
 	$(CC) $(CFLAGS) -o swing $(OBJ)
 
-$(OBJ): $(SRC)
+$(OBJ): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+run:
+	./swing
+.PHONY: run
 
 noopt:
 	@$(MAKE) OPTIMIZATION="-O0"
